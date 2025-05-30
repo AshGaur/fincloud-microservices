@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+loans:
+  message: "Welcome to flashstack loans related Prod APIs"
+  contactDetails:
+    name: "Tony Stark"
+    email: "stark@flashstack.com"
+  onCallSupport:
+    - (+91) 1234567890
+    - (+91) 1234567891

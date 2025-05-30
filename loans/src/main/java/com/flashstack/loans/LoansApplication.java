@@ -1,9 +1,12 @@
 package com.flashstack.loans;
 
+import com.flashstack.loans.dto.LoansContactDetailsDto;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableConfigurationProperties(value = {LoansContactDetailsDto.class})
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 @SpringBootApplication
 public class LoansApplication {

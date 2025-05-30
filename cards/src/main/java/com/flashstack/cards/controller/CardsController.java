@@ -1,12 +1,16 @@
 package com.flashstack.cards.controller;
 
 import com.flashstack.cards.constants.CardsConstants;
+import com.flashstack.cards.dto.CardsContactInfoDto;
 import com.flashstack.cards.dto.CardsDto;
 import com.flashstack.cards.dto.ResponseDto;
 import com.flashstack.cards.service.ICardsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +18,20 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
-@AllArgsConstructor
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RestController
 public class CardsController {
+    @Autowired
     private ICardsService cardsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    private Environment environment;
+
+    @Autowired
+    CardsContactInfoDto cardsContactInfoDto;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createCard(@Valid @RequestParam
@@ -66,5 +79,20 @@ public class CardsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return new ResponseEntity<>(buildVersion, HttpStatus.OK);
+    }
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+        return new ResponseEntity<>(environment.getProperty("JAVA_HOME"), HttpStatus.OK);
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfoDto> getContactInfo() {
+        return new ResponseEntity<>(cardsContactInfoDto, HttpStatus.OK);
     }
 }

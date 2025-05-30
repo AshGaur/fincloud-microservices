@@ -1,12 +1,16 @@
 package com.flashstack.accounts.controller;
 
 import com.flashstack.accounts.constants.AccountsConstants;
+import com.flashstack.accounts.dto.AccountsContactInfoDto;
 import com.flashstack.accounts.dto.CustomerDto;
 import com.flashstack.accounts.dto.ResponseDto;
 import com.flashstack.accounts.service.IAccountsService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +18,21 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
-@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AccountsController {
 
+    @Autowired
     private IAccountsService accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    Environment environment;
+
+    @Autowired
+    AccountsContactInfoDto accountsContactInfoDto;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
@@ -49,5 +62,20 @@ public class AccountsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+    }
+
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo(){
+        return new ResponseEntity<>(buildVersion, HttpStatus.OK);
+    }
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return new ResponseEntity<>(environment.getProperty("JAVA_HOME"), HttpStatus.OK);
+    }
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo(){
+        return new ResponseEntity<>(accountsContactInfoDto, HttpStatus.OK);
     }
 }

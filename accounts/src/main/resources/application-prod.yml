@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to flashstack accounts related prod APIs"
+  contactDetails:
+    name: "Tony Stark - Product Owner"
+    email: "stark@flashstack.com"
+  onCallSupport:
+    - (+91) 9765432109
+    - (+91) 8543210987

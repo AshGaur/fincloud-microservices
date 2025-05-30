@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+loans:
+  message: "Welcome to flashstack loans related QA APIs"
+  contactDetails:
+    name: "Bruce Banner - Lead QA"
+    email: "bruce@flashstack.com"
+  onCallSupport:
+    - (+91) 1234567890
+    - (+91) 1234567891
