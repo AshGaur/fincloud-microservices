@@ -6,6 +6,11 @@ spring:
     name: cards
   config:
     import: "optional:configserver:http://localhost:8071/"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: "prod"
   datasource:
@@ -21,3 +26,9 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
