@@ -1,14 +1,17 @@
+server:
+  port: 8071
+
 spring:
   application:
     name: "configserver"
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-locations: "classpath:/config"
-
-
-server:
-  port: 8071
+        git:
+          uri: "https://github.com/AshGaur/flashstack-centralized-config.git"
+          default-label : "main"
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
