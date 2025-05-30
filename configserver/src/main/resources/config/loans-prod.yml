@@ -1,13 +1,8 @@
-spring:
-  config:
-    activate:
-      on-profile: "prod"
-
 build:
   version: "1.0"
 
-cards:
-  message: "Welcome to flashstack cards related Prod APIs"
+loans:
+  message: "Welcome to flashstack loans related Prod APIs"
   contactDetails:
     name: "Tony Stark"
     email: "stark@flashstack.com"

@@ -2,6 +2,12 @@ server:
   port: 9000
 
 spring:
+  application:
+    name: cards
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  profiles:
+    active: "prod"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -15,22 +21,3 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
-  config:
-    import:
-      - "application-qa.yml"
-      - "application-prod.yml"
-  profiles:
-    active:
-      - "qa"
-
-build:
-  version: "3.0"
-
-cards:
-  message: "Welcome to flashstack cards related local APIs"
-  contactDetails:
-    name: "John Doe"
-    email: "john@flashstack.com"
-  onCallSupport:
-    - (+91) 1234567890
-    - (+91) 1234567891
