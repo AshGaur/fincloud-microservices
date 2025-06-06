@@ -1,22 +1,6 @@
 services:
-    rabbit:
-        image: rabbitmq:4-management
-        hostname: rabbitmq
-        ports:
-            - "5672:5672"
-            - "15672:15672"
-        healthcheck:
-            test: rabbitmq-diagnostics check_port_connectivity
-            interval: 10s
-            timeout: 5s
-            retries: 10
-            start_period: 5s
-        extends:
-            file: common-config.yml
-            service: network-deploy-service
-
     configserver:
-        image: ashgaur12/configserver:v2
+        image: ashgaur12/configserver:v3
         container_name: configserver-ms
         ports:
             - "8071:8071"
@@ -24,7 +8,7 @@ services:
             rabbit:
                 condition: service_healthy
         healthcheck:
-            test: curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1
+            test: curl --fail --silent configserver:8071/actuator/health/readiness | grep UP || exit 1
             interval: 10s
             timeout: 5s
             retries: 10
@@ -34,7 +18,7 @@ services:
             service: microservice-base-config
 
     accounts:
-        image: ashgaur12/accounts:v2
+        image: ashgaur12/accounts:v3
         container_name: accounts-ms
         ports:
             - "8080:8080"
@@ -48,7 +32,7 @@ services:
             service: microservice-configserver-config
 
     loans:
-        image: ashgaur12/loans:v2
+        image: ashgaur12/loans:v3
         container_name: loans-ms
         ports:
             - "8090:8090"
@@ -62,7 +46,7 @@ services:
             service: microservice-configserver-config
 
     cards:
-        image: ashgaur12/cards:v2
+        image: ashgaur12/cards:v3
         container_name: cards-ms
         ports:
             - "9000:9000"
