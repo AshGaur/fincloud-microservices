@@ -52,3 +52,9 @@ info:
     name: "loans"
     description: "Flashstack Loans Application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      flashstack:
+        loans: DEBUG
