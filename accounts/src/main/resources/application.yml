@@ -17,6 +17,10 @@ spring:
   sql:
     init:
       mode: always
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 management:
   endpoints:
@@ -54,7 +58,7 @@ eureka:
 
 info:
   app:
-    name: "loans"
+    name: "accounts"
     description: "Flashstack Accounts Application"
     version: "1.0.0"
 
@@ -63,3 +67,11 @@ logging:
     com:
       flashstack:
         accounts: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureThreshold: 50
+      waitDurationInOpenState: 10000
