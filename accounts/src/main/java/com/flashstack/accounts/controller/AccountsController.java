@@ -5,9 +5,9 @@ import com.flashstack.accounts.dto.AccountsContactInfoDto;
 import com.flashstack.accounts.dto.CustomerDto;
 import com.flashstack.accounts.dto.ResponseDto;
 import com.flashstack.accounts.service.IAccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -64,9 +64,14 @@ public class AccountsController {
                 .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
     }
 
+    @Retry(name="getBuildInfo", fallbackMethod = "getBuildInfoFallback")
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildInfo(){
         return new ResponseEntity<>(buildVersion, HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> getBuildInfoFallback(Throwable throwable){
+        return ResponseEntity.status(HttpStatus.OK).body("0.9");
     }
 
     @GetMapping("/java-version")

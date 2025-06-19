@@ -97,7 +97,8 @@ public class LoansController {
     }
 
     @GetMapping("/contact-info")
-    public ResponseEntity<LoansContactDetailsDto> getContactInfo(){
+    public ResponseEntity<LoansContactDetailsDto> getContactInfo(@RequestHeader("flashstack-correlation-id") String correlationId){
+        logger.debug("Invoked loans contact info Endpoint with correlationId: {}", correlationId);
         return new ResponseEntity<>(loansContactDetailsDto, HttpStatus.OK);
     }
 }
