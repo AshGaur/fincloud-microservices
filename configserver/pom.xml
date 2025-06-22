@@ -45,6 +45,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -70,7 +74,7 @@
 				<version>3.4.5</version>
 				<configuration>
 					<to>
-						<image>ashgaur12/${project.artifactId}:v4</image>
+						<image>ashgaur12/${project.artifactId}:v5dev</image>
 					</to>
 				</configuration>
 			</plugin>
