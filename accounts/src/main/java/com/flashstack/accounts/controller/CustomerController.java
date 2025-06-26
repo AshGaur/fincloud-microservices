@@ -25,7 +25,9 @@ public class CustomerController {
     @GetMapping("/fetchCustomerDetails")
     public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("flashstack-correlation-id") String correlationId,
             @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits") @RequestParam String mobileNumber) {
-        logger.debug("flashstack-correlation-id found:{}", correlationId);
-        return new ResponseEntity<>(customerService.fetchCustomerDetails(mobileNumber,correlationId), HttpStatus.OK);
+        logger.debug("fetchCustomerDetails method start");
+        CustomerDetailsDto customerDetailsDto = customerService.fetchCustomerDetails(mobileNumber, correlationId);
+        logger.debug("fetchCustomerDetails method end");
+        return new ResponseEntity<>(customerDetailsDto, HttpStatus.OK);
     }
 }
